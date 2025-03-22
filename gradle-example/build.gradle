@@ -1,0 +1,46 @@
+plugins {
+    id "java"
+    id "application"
+    id "org.sonarqube" version "3.0"
+    id 'org.owasp.dependencycheck' version "6.5.2"
+}
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+description = 'Example of SonarQube analysis with Dependency Check'
+version = '1.0'
+
+sonarqube {
+    properties {
+        property 'sonar.projectName', 'SCA demo - log4shell detect - Gradle'
+        property 'sonar.projectKey', 'demo:sca-log4shell-detect-gradle'
+        property 'sonar.sources', 'src, build.gradle'
+        property 'sonar.dependencyCheck.htmlReportPath','build/reports/dependency-check-report.html'
+        property 'sonar.dependencyCheck.jsonReportPath','build/reports/dependency-check-report.json'
+    }
+}
+dependencyCheck {
+    format='ALL'
+}
+
+dependencies {
+    //
+    // The "Log4shell" news revealed that many versions of log4j are vulnerable to CVE-2021-44228
+    // including the below version 2.12.0.
+    // - > Install SonarQube dependency-check plugin
+    // - > Run an analysis: ./gradlew dependencyCheckAnalyze sonarqube
+    // - > See the vulnerability reported in SonarQube on the SonarQube project itself
+    // - > Upgrade the below dependency to 2.17.1 (not vulnerable)
+    // - > Run analysis again
+    // - > The vulnerability is gone !
+    // Same pattern applies to all sorts of project dependencies detectable with dependency-check
+    //
+  compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.12.0'
+  compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.12.0'
+}
+
+// Define the main class for the application
+mainClassName = 'Insecure'

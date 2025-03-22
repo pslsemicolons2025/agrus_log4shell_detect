@@ -1,0 +1,6 @@
+maven-example/bin/
+maven-example/target/
+gradle-example/build/
+gradle-example/.gradle/
+node-example/
+standalone-check/
