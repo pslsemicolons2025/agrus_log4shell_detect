@@ -1,4 +1,4 @@
 ## log4shell-detect
 
-This sample project demoes detection of the log4shell vulnerabilibity
+This sample project demoes detection of the log4shell vulnerabilibity.
   
